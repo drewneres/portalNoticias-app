@@ -16,12 +16,21 @@
                         <div class ="row">
                             @foreach ($noticias as $noticia)
                                 <div class="col-md-4">
-                                    <div class="card mb-4 shadow-sm">
-                                        <img src="{{ asset($noticia->url) }}" alt="{{ $noticia->titulo }}" class="card-img-top">
+                                    <div class="card">
+                            @if($noticia->url)
+                                <img src="{{ asset($noticia->url) }}" alt="{{ $noticia->titulo }}" class="">
+                            @endif
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $noticia->titulo }}</h5>  
                                             <p class="card-text">{{ $noticia->descricao }}</p>
                                         </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
+    </div>
+</x-app-layout>
