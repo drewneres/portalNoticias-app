@@ -39,7 +39,7 @@
                             <td>{{ $noticia->id }}</td>
                             <td>{{ $noticia->titulo }}</td>
                             <td>{{ $noticia->descricao }}</td>
-                            <td><a href="{{ noticia->url }}" target="_blank">{{ $noticia->url }}</a></td>
+                            <td><a href="{{ $noticia->url }}" target="_blank">{{ $noticia->url }}</a></td>
                             <td>
                                 <form action="{{ route('noticias.destroy', $noticia->id) }}" method="post">
                                     <a class="btn btn-info" href="{{ route('noticias.show', $noticia->id) }}">Visualizar</a>
