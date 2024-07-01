@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Noticia;
 use Illuminate\Http\Request;
 
 class NoticiasController extends Controller
@@ -11,7 +11,14 @@ class NoticiasController extends Controller
      */
     public function index()
     {
-        //
+        $noticias = Noticia::all();
+        return view('dashboard', compact('noticias'));
+    }
+    
+    public function home()
+    {
+        $noticias = Noticia::all();
+        return view('home', compact('noticias'));
     }
 
     /**
@@ -19,7 +26,7 @@ class NoticiasController extends Controller
      */
     public function create()
     {
-        //
+        return view('noticias.create');
     }
 
     /**
@@ -27,38 +34,70 @@ class NoticiasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descricao' => 'required|string',
+            'arquivo' => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $noticia = Noticia::create([
+            'titulo' => $request->titulo,
+            'descricao' => $request->descricao,
+        ]);
+
+        $noticia->storeArquivo($request->file('arquivo'));
+
+        return redirect()->route('dashboard')->with('success', 'Notícia cadastrada com sucesso!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Noticia $noticia)
     {
-        //
+        return view('noticias.show', compact('noticia'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Noticia $noticia)
     {
-        //
+        return view('noticias.edit', compact('noticia'));
     }
+    
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,Noticia $noticia)
     {
-        //
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descricao' => 'required|string|max:255',
+            'arquivo' => 'required|file|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $noticia->titulo = $request->titulo;
+        $noticia->descricao = $request->descricao;
+
+        if($request->file('arquivo')) {
+            $noticia->storeArquivo($request->file('arquivo'));
+        }
+
+        $noticia->save();
+
+        return redirect()->route('dashboard')->with('success', 'Notícia atualizada com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Noticia $noticia)
     {
-        //
+        $noticia->delete();
+        
+        return redirect()->route('dashboard')->with('success', 'Notícia deletada com sucesso!');
     }
+
 }
