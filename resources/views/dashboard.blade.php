@@ -34,15 +34,8 @@
                     <th>URL</th>
                 </tr>
             </thead>
-            <tbody>
                 @foreach ($noticias as $noticia)
                     <tr>
-                        <td>{{ $noticia->id }}</td>
-                        <td>{{ $noticia->titulo }}</td>
-                        <td>{{ $noticia->descricao }}</td>
-                        <td>
-                           @foreach ($noticias as $noticia)
-                           <tr>
                             <td>{{ $noticia->id }}</td>
                             <td>{{ $noticia->titulo }}</td>
                             <td>{{ $noticia->descricao }}</td>
@@ -58,7 +51,6 @@
                             </td>
                         </tr>
                 @endforeach
-            </tbody>
         </table>
 
 </x-app-layout>

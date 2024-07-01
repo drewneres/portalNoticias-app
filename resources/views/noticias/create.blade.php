@@ -17,7 +17,7 @@
             </div>
         @endif
         <form action="{{ route('noticias.store') }}" method="post" enctype="multipart/form-data">
-            @csrf {{-- Adicionado para proteção contra ataques CSRF--}}
+            @csrf
             <div class="form-group">
                 <label for="titulo">Titulo</label>
                 <input type="text" class="form-control" name="titulo" id="titulo">
@@ -31,3 +31,6 @@
                 <input type="file" class="form-control" name="arquivo" id="arquivo">
             </div>
             <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
+</x-app-layout>
