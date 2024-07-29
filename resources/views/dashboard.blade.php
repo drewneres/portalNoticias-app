@@ -6,14 +6,20 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
+
+    <div class="container mt-5">
+    <form method="GET" action="{{ route('noticias.index') }}" class="form-inline">
+        <div class="form-group mb-2">
+            <label for="title" class="sr-only">Título</label>
+            <input type="text" name="title" id="title" class="form-control form-control-sm form-control-custom mr-2" placeholder="Título" value="{{ request('title') }}">
         </div>
+        <div class="form-group mb-2">
+            <label for="description" class="sr-only">Descrição</label>
+            <input type="text" name="description" id="description" class="form-control form-control-sm form-control-custom mr-2" placeholder="Descrição" value="{{ request('description') }}">
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm mr-2">Filtrar</button>
+        <a href="{{ route('noticias.index') }}" class="btn btn-secondary btn-sm">Limpar Filtros</a>
+    </form>
     </div>
 
     <div class="container">
@@ -25,13 +31,15 @@
             </div>
         @endif
 
-        <table class="table mt-2">
+        @if($noticias->count())
+        <table class="table table-bordered mt-2">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Titulo</th>
                     <th>Descrição</th>
                     <th>URL</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
                 @foreach ($noticias as $noticia)
@@ -53,4 +61,11 @@
                 @endforeach
         </table>
 
+            <div>
+            {{ $noticias->links() }}
+            </div>
+
+        @else
+            <p>Nenhuma noticia cadastrada</p>
+        @endif
 </x-app-layout>

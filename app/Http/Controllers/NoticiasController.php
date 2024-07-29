@@ -12,7 +12,10 @@ class NoticiasController extends Controller
     public function index()
     {
         $noticias = Noticia::all();
+        $filters = request()->only('title', 'description');
+        $noticias = Noticia::filter($filters)->paginate(10)->withQueryString();
         return view('dashboard', compact('noticias'));
+
     }
     
     public function home()
